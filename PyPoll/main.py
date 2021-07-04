@@ -2,8 +2,6 @@ import os
 
 import csv
 
-import decimal
-
 votercount = 0
 votes = 0
 percentage = 0
