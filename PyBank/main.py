@@ -51,14 +51,11 @@ with open(csvpath) as csvfile:
         if differencecolumn[i] == worstmonth:
             worstmonthdate = str(datecount[i+1])
         
+def output():
+    return (f"Financial Analysis\n----------------------\nTotal Months: {monthcount}\nTotal: ${row_count}\nAverage Change: ${Average}\nGreatest Increase in Profits: {bestmonthdate} (${bestmonth})\nGreatest Decrease in Profits: {worstmonthdate} (${worstmonth})")
 
-    print(f"Financial Analysis")
-    print("-"*20)
-    print(f"Total Months: {monthcount}")
-    print(f"Total: ${row_count}")
-    print(f"Average Change: ${Average}")
-    print(f"Greatest Increase in Profits: {bestmonthdate} (${bestmonth})")
-    print(f"Greatest Decrease in Profits: {worstmonthdate} (${worstmonth})") 
+print(output())
 
-
-
+textpath = os.path.join('analysis', 'analysis.txt')
+with open(textpath, 'w') as textfile:
+    textfile.write(str(output()))
