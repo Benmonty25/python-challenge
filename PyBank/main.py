@@ -1,9 +1,12 @@
 import os
 
 import csv
-from typing import Counter
 
 row_count = 0
+monthcount = 0
+totaldifference = 0
+bestmonthdate = 0
+worstmonthdate = 0
 
 csvpath = os.path.join('Resources', 'budget_data.csv')
 
@@ -15,66 +18,47 @@ with open(csvpath) as csvfile:
     datecount=[]
     profitloss = []
     differencecolumn = []
+    linechanges=[]
 
     for row in csvreader:
         datecount.append(row[0])
         profitloss.append(row[1])
     
-    monthcount = 0
     for month in datecount:
         monthcount += 1   
     
     for row in profitloss:
-        row_count += float(row)
-
-    linechanges=[]
+        row_count += int(row)
 
     for i in range(0,len(profitloss)-1):
-        linechanges = float(profitloss[i+1]) - float(profitloss[i])
+        linechanges = int(profitloss[i+1]) - int(profitloss[i])
 
         differencecolumn.append(linechanges)
-
-    totaldifference = 0
-    
+      
     for row in differencecolumn:
-        totaldifference += float(row)
+        totaldifference += int(row)
 
     Average = round(totaldifference / (monthcount-1), 2)
 
-    bestmonth = max(differencecolumn)
+    bestmonth = round(max(differencecolumn),0)
 
-    worstmonth = min(differencecolumn)
+    worstmonth = round(min(differencecolumn),0)
 
-    print(bestmonth)
-    print(worstmonth)
+    for i in range(0,len(differencecolumn)):
+        if differencecolumn[i] == bestmonth:
+            bestmonthdate = str(datecount[i+1])
 
-    bestmonthdate = datecount.index(differencecolumn,bestmonth)
-    print(bestmonthdate)
-    
-    # bestmonthdate = 0
-    # bestmonthnumber = 0
-    # worstmonthdate = 0
-    # worstmonthnumber = 0
-
-    # for i in range(0,len(differencecolumn)):
-    #     bestmonth = 0
-    #     if differencecolumn[i] > bestmonth:
-    #         bestmonth = float(differencecolumn[i])
-    #         bestmonthdate = datecount[i]
-            
-    #     worstmonth = 0
-    #     if differencecolumn[i] < worstmonth:
-    #         worstmonth = float(differencecolumn[i])
-    #         worstmonthdate = str(datecount[i])
+        if differencecolumn[i] == worstmonth:
+            worstmonthdate = str(datecount[i+1])
         
 
-#     print(f"Financial Analysis")
-#     print("-"*20)
-#     print(f"Total Months: {monthcount}")
-#     print(f"Total: ${row_count}")
-#     print(f"Average Change: ${Average}")
-#     print(f"Greatest Increase in Profits: {bestmonthdate} ({bestmonth})")
-#     print(f"Greatest Decrease in Profits: {worstmonthdate} ({worstmonth})") 
-# #         print(row)
+    print(f"Financial Analysis")
+    print("-"*20)
+    print(f"Total Months: {monthcount}")
+    print(f"Total: ${row_count}")
+    print(f"Average Change: ${Average}")
+    print(f"Greatest Increase in Profits: {bestmonthdate} (${bestmonth})")
+    print(f"Greatest Decrease in Profits: {worstmonthdate} (${worstmonth})") 
+
 
 
